@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { FlashMessagesService } from 'angular2-flash-messages'
 import { AuthService } from '../../services/auth.service'
+import { SettingsService } from '../../services/settings.service'
 
 
 @Component({
@@ -18,7 +19,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private _authService: AuthService, 
     private _router: Router, 
-    private _flashMessage: FlashMessagesService
+    private _flashMessage: FlashMessagesService,
+    private _settingsService: SettingsService
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class NavbarComponent implements OnInit {
         this.isLoggedIn = false
       }
     })
+    this.showRegister = this._settingsService.getSettings().allowRegistration
 
   }
 
@@ -38,5 +41,4 @@ export class NavbarComponent implements OnInit {
     this._flashMessage.show('You have now logged out', {cssClass: 'alert-success', timeout: 4000})
     this._router.navigate(['/login'])
   }
-
 }
